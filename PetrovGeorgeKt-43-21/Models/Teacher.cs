@@ -4,7 +4,12 @@ namespace PetrovGeorgeKt_43_21.Models
 {
     public class Teacher
     {
-        public int TeacherId { get; set; } 
+        public int TeacherId { get; set; }
+        public string? FirstName { get; set; }
+
+        public string? LastName { get; set; }
+
+        public string? MiddleName { get; set; }
 
         public decimal Rate { get; set; } // Ставка
 

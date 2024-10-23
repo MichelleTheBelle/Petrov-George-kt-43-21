@@ -28,6 +28,23 @@ namespace PetrovGeorgeKt_43_21.Configurations
                 .HasColumnType(ColumnType.Decimal)
                 .HasComment("Ставка преподавателя");
 
+            builder.Property(p => p.FirstName)
+                .IsRequired()
+                .HasColumnName("c_teacher_firstname")
+                .HasColumnType(ColumnType.String).HasMaxLength(50)
+                .HasComment("Имя преподавателя");
+
+            builder.Property(p => p.LastName)
+                .IsRequired()
+                .HasColumnName("c_teacher_lastname")
+                .HasColumnType(ColumnType.String).HasMaxLength(50)
+                .HasComment("Фамилия преподавателя");
+
+            builder.Property(p => p.MiddleName)
+                .HasColumnName("c_teacher_middlename")
+                .HasColumnType(ColumnType.String).HasMaxLength(50)
+                .HasComment("Отчество преподавателя");
+
             builder.Property(p => p.Degree)
                 .HasColumnName("c_teacher_degree")
                 .HasColumnType(ColumnType.String).HasMaxLength(50)
