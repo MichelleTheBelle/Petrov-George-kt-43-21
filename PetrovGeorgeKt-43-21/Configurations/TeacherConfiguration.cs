@@ -42,6 +42,8 @@ namespace PetrovGeorgeKt_43_21.Configurations
                 .HasColumnName("c_teacher_position")
                 .HasColumnType(ColumnType.String).HasMaxLength(50)
                 .HasComment("Должность преподавателя");
+
+            builder.ToTable(TableName);
         }
     }
 }

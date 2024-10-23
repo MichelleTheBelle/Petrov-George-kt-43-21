@@ -27,7 +27,7 @@ namespace PetrovGeorgeKt_43_21.Configurations
                 .HasColumnType(ColumnType.Int)
                 .HasComment("Лабораторные часы");
 
-            builder.Property(p => p.LabHours)
+            builder.Property(p => p.LectureHours)
                .HasColumnName("c_teachingload_lecturehours")
                .HasColumnType(ColumnType.Int)
                .HasComment("Лекционные часы");
@@ -53,6 +53,12 @@ namespace PetrovGeorgeKt_43_21.Configurations
                 .HasForeignKey(p => p.SubjectId)
                 .HasConstraintName("fk_f_subject_id")
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.ToTable(TableName)
+                .HasIndex(p => p.TeacherId, $"idx_{TableName}_fk_f_teacher_id");
+
+            builder.ToTable(TableName)
+                .HasIndex(p => p.SubjectId, $"idx_{TableName}_fk_f_subject_id");
 
             builder.Navigation(p => p.Subject)
                 .AutoInclude();

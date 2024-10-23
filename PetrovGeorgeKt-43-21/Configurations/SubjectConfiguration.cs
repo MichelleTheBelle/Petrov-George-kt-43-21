@@ -29,7 +29,7 @@ namespace PetrovGeorgeKt_43_21.Configurations
                 .HasComment("Название дисциплины");
 
             builder.Property(t => t.LabHours)
-                .HasColumnName("c_subject_lanhours")
+                .HasColumnName("c_subject_labhours")
                 .HasColumnType(ColumnType.Int)
                 .HasComment("Лабораторные часы");
 
@@ -37,7 +37,9 @@ namespace PetrovGeorgeKt_43_21.Configurations
                 .HasColumnName("c_subject_lecturehours")
                 .HasColumnType(ColumnType.Int)
                 .HasComment("Лекционные часы");
-                
+
+            builder.ToTable(TableName);
+
         }
     }
 }
