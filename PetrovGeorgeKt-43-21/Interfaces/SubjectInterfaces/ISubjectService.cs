@@ -7,7 +7,7 @@ namespace PetrovGeorgeKt_43_21.Interfaces.SubjectInterfaces
 {
     public interface ISubjectService
     {
-        public Task<Subject[]> GetSubjectsByLoadAsync(SubjectTeacherFilter filter, CancellationToken cancellationToken);
+        public Task<Subject[]> GetSubjectsByTeacherAsync(SubjectTeacherFilter filter, CancellationToken cancellationToken);
     }
 
     public class SubjectService : ISubjectService
@@ -18,4 +18,29 @@ namespace PetrovGeorgeKt_43_21.Interfaces.SubjectInterfaces
         {
             _dbContext = dbContext;
         }
+        public Task<Subject[]> GetSubjectsByTeacherAsync(SubjectTeacherFilter filter, CancellationToken cancellationToken = default)
+        {
+            var query = _dbContext.Set<TeachingLoad>()
+        .Include(tl => tl.Subject) 
+        .Include(tl => tl.Teacher) 
+        .AsQueryable();
+
+            if (!string.IsNullOrEmpty(filter.FirstName))
+            {
+                query = query.Where(tl => tl.Teacher.FirstName == filter.FirstName);
+            }
+
+            if (!string.IsNullOrEmpty(filter.LastName))
+            {
+                query = query.Where(tl => tl.Teacher.LastName == filter.LastName);
+            }
+
+            if (!string.IsNullOrEmpty(filter.MiddleName))
+            {
+                query = query.Where(tl => tl.Teacher.MiddleName == filter.MiddleName);
+            }
+
+            return query.Select(tl => tl.Subject).Distinct().ToArrayAsync(cancellationToken);
+        }
+    }
 }

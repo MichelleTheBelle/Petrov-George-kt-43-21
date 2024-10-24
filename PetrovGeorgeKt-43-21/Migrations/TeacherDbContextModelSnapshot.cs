@@ -70,6 +70,26 @@ namespace PetrovGeorgeKt_43_21.Migrations
                         .HasColumnName("c_teacher_degree")
                         .HasComment("Степень преподавателя");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar")
+                        .HasColumnName("c_teacher_firstname")
+                        .HasComment("Имя преподавателя");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar")
+                        .HasColumnName("c_teacher_lastname")
+                        .HasComment("Фамилия преподавателя");
+
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar")
+                        .HasColumnName("c_teacher_middlename")
+                        .HasComment("Отчество преподавателя");
+
                     b.Property<string>("Position")
                         .HasMaxLength(50)
                         .HasColumnType("varchar")
