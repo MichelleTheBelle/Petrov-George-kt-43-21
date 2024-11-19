@@ -28,18 +28,27 @@ namespace PetrovGeorgeKt_43_21.Configurations
                 .HasColumnType(ColumnType.String).HasMaxLength(100)
                 .HasComment("Название дисциплины");
 
-            builder.Property(t => t.LabHours)
-                .HasColumnName("c_subject_labhours")
+            builder.Property(t => t.Hours)
+                .HasColumnName("c_subject_hours")
                 .HasColumnType(ColumnType.Int)
-                .HasComment("Лабораторные часы");
+                .HasComment("Часы");
 
-            builder.Property(t => t.LectureHours)
-                .HasColumnName("c_subject_lecturehours")
-                .HasColumnType(ColumnType.Int)
-                .HasComment("Лекционные часы");
+			builder.Property(p => p.TeacherId)
+	            .HasColumnName("c_subject_teacher_id")
+	            .HasComment("Идентификатор преподавателя");
 
-            builder.ToTable(TableName);
+			builder.ToTable(TableName)
+                .HasOne(p => p.Teacher)
+                .WithMany()
+                .HasForeignKey(p => p.TeacherId)
+                .HasConstraintName("fk_f_teacher_id")
+                .OnDelete(DeleteBehavior.Restrict);
 
-        }
+			builder.ToTable(TableName)
+				.HasIndex(p => p.TeacherId, $"idx_{TableName}_fk_f_teacher_id");
+
+			builder.Navigation(p => p.Teacher)
+				.AutoInclude();
+		}
     }
 }

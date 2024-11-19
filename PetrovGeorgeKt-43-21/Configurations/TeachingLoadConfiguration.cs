@@ -22,48 +22,26 @@ namespace PetrovGeorgeKt_43_21.Configurations
                 .HasColumnName("teachingload_id")
                 .HasComment("Идентификатор нагрузки преподавателя");
 
-            builder.Property(p => p.LabHours)
-                .HasColumnName("c_teachingload_labhours")
+            builder.Property(p => p.Hours)
+                .HasColumnName("c_teachingload_hours")
                 .HasColumnType(ColumnType.Int)
-                .HasComment("Лабораторные часы");
-
-            builder.Property(p => p.LectureHours)
-               .HasColumnName("c_teachingload_lecturehours")
-               .HasColumnType(ColumnType.Int)
-               .HasComment("Лекционные часы");
-
-            builder.Property(p => p.TeacherId)
-                .HasColumnName("c_teachingload_teacher_id")
-                .HasComment("Идентификатор учителя");
+                .HasComment("Часы");
 
             builder.Property(p => p.SubjectId)
                 .HasColumnName("c_teachingload_subject_id")
                 .HasComment("Идентификатор дисциплины");
 
             builder.ToTable(TableName)
-                .HasOne(p => p.Teacher)
-                .WithMany()
-                .HasForeignKey(p => p.TeacherId)
-                .HasConstraintName("fk_f_teacher_id")
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.ToTable(TableName)
                 .HasOne(p => p.Subject)
-                .WithMany()
-                .HasForeignKey(p => p.SubjectId)
+                .WithOne()
+                .HasForeignKey<TeachingLoad>(p => p.SubjectId)
                 .HasConstraintName("fk_f_subject_id")
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.ToTable(TableName)
-                .HasIndex(p => p.TeacherId, $"idx_{TableName}_fk_f_teacher_id");
 
             builder.ToTable(TableName)
                 .HasIndex(p => p.SubjectId, $"idx_{TableName}_fk_f_subject_id");
 
             builder.Navigation(p => p.Subject)
-                .AutoInclude();
-
-            builder.Navigation(p => p.Teacher)
                 .AutoInclude();
         }
     }

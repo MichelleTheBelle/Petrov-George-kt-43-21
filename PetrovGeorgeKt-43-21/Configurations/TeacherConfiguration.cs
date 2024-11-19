@@ -22,28 +22,71 @@ namespace PetrovGeorgeKt_43_21.Configurations
                 .HasColumnName("teacher_id")
                 .HasComment("Идентификатор записи учителя");
 
-            builder.Property(p => p.Rate)
-                .IsRequired()
-                .HasColumnName("c_teacher_rate")
-                .HasColumnType(ColumnType.Decimal)
-                .HasComment("Ставка преподавателя");
+			builder.Property(p => p.LastName)
+				.HasColumnName("c_teacher_lastname")
+				.HasColumnType(ColumnType.String).HasMaxLength(50)
+				.HasComment("Фамилия преподавателя");
 
-            builder.Property(p => p.Degree)
-                .HasColumnName("c_teacher_degree")
-                .HasColumnType(ColumnType.String).HasMaxLength(50)
-                .HasComment("Степень преподавателя");
+			builder.Property(p => p.FirstName)
+				.HasColumnName("c_teacher_firstname")
+				.HasColumnType(ColumnType.String).HasMaxLength(50)
+				.HasComment("Имя преподавателя");
 
-            builder.Property(p => p.Title)
-                .HasColumnName("c_teacher_title")
-                .HasColumnType(ColumnType.String).HasMaxLength(50)
-                .HasComment("Звание преподавателя");
+			builder.Property(p => p.Patronymic)
+				.HasColumnName("c_teacher_patronymic")
+				.HasColumnType(ColumnType.String).HasMaxLength(50)
+				.HasComment("Отчество преподавателя");
 
-            builder.Property(p => p.Position)
-                .HasColumnName("c_teacher_position")
-                .HasColumnType(ColumnType.String).HasMaxLength(50)
-                .HasComment("Должность преподавателя");
+			builder.Property(p => p.DegreeId)
+				.HasColumnName("c_teacher_degree_id")
+				.HasComment("Идентификатор степени");
 
-            builder.ToTable(TableName);
-        }
+			builder.Property(p => p.PositionId)
+				.HasColumnName("c_teacher_position_id")
+				.HasComment("Идентификатор должности");
+
+			builder.Property(p => p.DepartmentId)
+				.HasColumnName("c_teacher_department_id")
+				.HasComment("Идентификатор кафедры");
+
+			builder.ToTable(TableName)
+				.HasOne(p => p.Degree)
+				.WithMany()
+				.HasForeignKey(p => p.DegreeId)
+				.HasConstraintName("fk_f_degree_id")
+				.OnDelete(DeleteBehavior.Cascade);
+
+			builder.ToTable(TableName)
+				.HasOne(p => p.Position)
+				.WithMany()
+				.HasForeignKey(p => p.PositionId)
+				.HasConstraintName("fk_f_position_id")
+				.OnDelete(DeleteBehavior.Cascade);
+
+			builder.ToTable(TableName)
+				.HasOne(p => p.Department)
+				.WithMany()
+				.HasForeignKey(p => p.DepartmentId)
+				.HasConstraintName("fk_f_department_id")
+				.OnDelete(DeleteBehavior.Cascade);
+
+			builder.ToTable(TableName)
+			  .HasIndex(p => p.DegreeId, $"idx_{TableName}_fk_f_degree_id");
+
+			builder.Navigation(p => p.Degree)
+				.AutoInclude();
+
+			builder.ToTable(TableName)
+			  .HasIndex(p => p.PositionId, $"idx_{TableName}_fk_f_position_id");
+
+			builder.Navigation(p => p.Position)
+				.AutoInclude();
+
+			builder.ToTable(TableName)
+			  .HasIndex(p => p.DepartmentId, $"idx_{TableName}_fk_f_department_id");
+
+			builder.Navigation(p => p.Department)
+				.AutoInclude();
+		}
     }
 }

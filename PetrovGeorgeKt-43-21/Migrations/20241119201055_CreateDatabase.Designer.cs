@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PetrovGeorgeKt_43_21.Database;
 
@@ -10,9 +11,11 @@ using PetrovGeorgeKt_43_21.Database;
 namespace PetrovGeorgeKt_43_21.Migrations
 {
     [DbContext(typeof(TeacherDbContext))]
-    partial class TeacherDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241119201055_CreateDatabase")]
+    partial class CreateDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,7 +112,7 @@ namespace PetrovGeorgeKt_43_21.Migrations
 
                     b.Property<int>("Hours")
                         .HasColumnType("int")
-                        .HasColumnName("c_subject_hours")
+                        .HasColumnName("c_subject_labhours")
                         .HasComment("Часы");
 
                     b.Property<string>("Name")
@@ -199,7 +202,7 @@ namespace PetrovGeorgeKt_43_21.Migrations
 
                     b.Property<int>("Hours")
                         .HasColumnType("int")
-                        .HasColumnName("c_teachingload_hours")
+                        .HasColumnName("c_teachingload_labhours")
                         .HasComment("Часы");
 
                     b.Property<int>("SubjectId")

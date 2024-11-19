@@ -5,13 +5,16 @@ namespace PetrovGeorgeKt_43_21.Models
     public class Teacher
     {
         public int TeacherId { get; set; } 
+        public string? LastName { get; set; } 
+        public string? FirstName { get; set; } 
+        public string? Patronymic { get; set; } 
 
-        public decimal Rate { get; set; } // Ставка
+        public int DegreeId { get; set; }
+        public Degree? Degree { get; set; }
 
-        public string? Degree { get; set; } // Степень
-
-        public string? Title { get; set; } // Звание
-
-        public string? Position { get; set; } // Должность
+        public int PositionId { get; set; }
+        public Position? Position { get; set; }
+        public int DepartmentId { get; set; }
+        public Department? Department { get; set; }
     }
 }

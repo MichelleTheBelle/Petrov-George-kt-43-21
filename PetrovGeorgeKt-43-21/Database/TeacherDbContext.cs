@@ -9,12 +9,18 @@ namespace PetrovGeorgeKt_43_21.Database
         DbSet<Teacher> Teachers { get; set; }
         DbSet<Subject> Subjects { get; set; }
         DbSet<TeachingLoad> TeachingLoads { get; set; }
+        DbSet<Degree> Degrees { get; set; }
+        DbSet<Department> Departments { get; set; }
+        DbSet<Position> Positions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new TeacherConfiguration());
             modelBuilder.ApplyConfiguration(new SubjectConfiguration());
             modelBuilder.ApplyConfiguration(new TeachingLoadConfiguration());
+            modelBuilder.ApplyConfiguration(new  DegreeConfiguration());
+            modelBuilder.ApplyConfiguration(new  PositionConfiguration());
+            modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
         }
         public TeacherDbContext(DbContextOptions<TeacherDbContext> options) : base(options) 
         {
