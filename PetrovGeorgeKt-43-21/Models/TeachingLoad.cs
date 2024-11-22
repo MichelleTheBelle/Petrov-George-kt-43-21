@@ -9,7 +9,5 @@ namespace PetrovGeorgeKt_43_21.Models
 
         public int Hours { get; set; } 
 
-        public int SubjectId { get; set; } 
-        public Subject? Subject { get; set; } 
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PetrovGeorgeKt_43_21.Database;
 
@@ -11,9 +12,11 @@ using PetrovGeorgeKt_43_21.Database;
 namespace PetrovGeorgeKt_43_21.Migrations
 {
     [DbContext(typeof(TeacherDbContext))]
-    partial class TeacherDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241121191152_Edition")]
+    partial class Edition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,7 +214,7 @@ namespace PetrovGeorgeKt_43_21.Migrations
                     b.HasKey("TeachingLoadId")
                         .HasName("pk_cd_load_load_id");
 
-                    b.ToTable("cd_load", (string)null);
+                    b.ToTable("TeachingLoads");
                 });
 
             modelBuilder.Entity("PetrovGeorgeKt_43_21.Models.Department", b =>

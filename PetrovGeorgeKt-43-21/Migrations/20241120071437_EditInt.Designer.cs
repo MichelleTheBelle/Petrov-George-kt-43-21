@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PetrovGeorgeKt_43_21.Database;
 
@@ -11,9 +12,11 @@ using PetrovGeorgeKt_43_21.Database;
 namespace PetrovGeorgeKt_43_21.Migrations
 {
     [DbContext(typeof(TeacherDbContext))]
-    partial class TeacherDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241120071437_EditInt")]
+    partial class EditInt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,6 +111,11 @@ namespace PetrovGeorgeKt_43_21.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"));
 
+                    b.Property<int>("Hours")
+                        .HasColumnType("int")
+                        .HasColumnName("c_subject_hours")
+                        .HasComment("Часы");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -120,20 +128,10 @@ namespace PetrovGeorgeKt_43_21.Migrations
                         .HasColumnName("c_subject_teacher_id")
                         .HasComment("Идентификатор преподавателя");
 
-                    b.Property<int>("TeachingLoadId")
-                        .HasColumnType("int")
-                        .HasColumnName("c_subject_teachingload_id")
-                        .HasComment("Идентификатор нагрузки");
-
                     b.HasKey("SubjectId")
                         .HasName("pk_cd_subject_subject_id");
 
-                    b.HasIndex("TeachingLoadId")
-                        .IsUnique();
-
                     b.HasIndex(new[] { "TeacherId" }, "idx_cd_subject_fk_f_teacher_id");
-
-                    b.HasIndex(new[] { "TeachingLoadId" }, "idx_cd_subject_fk_f_teachingload_id");
 
                     b.ToTable("cd_subject", (string)null);
                 });
@@ -208,8 +206,18 @@ namespace PetrovGeorgeKt_43_21.Migrations
                         .HasColumnName("c_teachingload_hours")
                         .HasComment("Часы");
 
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int")
+                        .HasColumnName("c_teachingload_subject_id")
+                        .HasComment("Идентификатор дисциплины");
+
                     b.HasKey("TeachingLoadId")
                         .HasName("pk_cd_load_load_id");
+
+                    b.HasIndex("SubjectId")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "SubjectId" }, "idx_cd_load_fk_f_subject_id");
 
                     b.ToTable("cd_load", (string)null);
                 });
@@ -234,16 +242,7 @@ namespace PetrovGeorgeKt_43_21.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_f_teacher_id");
 
-                    b.HasOne("PetrovGeorgeKt_43_21.Models.TeachingLoad", "TeachingLoad")
-                        .WithOne()
-                        .HasForeignKey("PetrovGeorgeKt_43_21.Models.Subject", "TeachingLoadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_f_teachingload_id");
-
                     b.Navigation("Teacher");
-
-                    b.Navigation("TeachingLoad");
                 });
 
             modelBuilder.Entity("PetrovGeorgeKt_43_21.Models.Teacher", b =>
@@ -256,7 +255,7 @@ namespace PetrovGeorgeKt_43_21.Migrations
                         .HasConstraintName("fk_f_degree_id");
 
                     b.HasOne("PetrovGeorgeKt_43_21.Models.Department", "Department")
-                        .WithMany("Teachers")
+                        .WithMany()
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -276,9 +275,16 @@ namespace PetrovGeorgeKt_43_21.Migrations
                     b.Navigation("Position");
                 });
 
-            modelBuilder.Entity("PetrovGeorgeKt_43_21.Models.Department", b =>
+            modelBuilder.Entity("PetrovGeorgeKt_43_21.Models.TeachingLoad", b =>
                 {
-                    b.Navigation("Teachers");
+                    b.HasOne("PetrovGeorgeKt_43_21.Models.Subject", "Subject")
+                        .WithOne()
+                        .HasForeignKey("PetrovGeorgeKt_43_21.Models.TeachingLoad", "SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_f_subject_id");
+
+                    b.Navigation("Subject");
                 });
 #pragma warning restore 612, 618
         }

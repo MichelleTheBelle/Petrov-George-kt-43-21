@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetrovGeorgeKt_43_21.Helpers;
 using PetrovGeorgeKt_43_21.Models;
+using System.Reflection.Emit;
 
 namespace PetrovGeorgeKt_43_21.Configurations
 {
@@ -41,10 +42,12 @@ namespace PetrovGeorgeKt_43_21.Configurations
 				.OnDelete(DeleteBehavior.Restrict);
 
 			builder.ToTable(TableName)
-				.HasIndex(p => p.HeadId, $"idx_{TableName}_fk_f_head_id");
+				.HasMany(d => d.Teachers)
+				.WithOne(t => t.Department)
+				.HasForeignKey(t => t.DepartmentId);
 
-			builder.Navigation(p => p.Head)
-				.AutoInclude();
+			builder.ToTable(TableName)
+				.HasIndex(p => p.HeadId, $"idx_{TableName}_fk_f_head_id");
 		}
 	}
 }

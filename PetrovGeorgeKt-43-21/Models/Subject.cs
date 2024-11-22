@@ -8,8 +8,9 @@ namespace PetrovGeorgeKt_43_21.Models
 
         public string? Name { get; set; } 
 
-        public int Hours { get; set; } 
         public int TeacherId { get; set; }
         public Teacher? Teacher { get; set; }
+        public int TeachingLoadId { get; set; }
+        public TeachingLoad? TeachingLoad { get; set; }
     }
 }

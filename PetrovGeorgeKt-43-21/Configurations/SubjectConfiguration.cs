@@ -28,11 +28,6 @@ namespace PetrovGeorgeKt_43_21.Configurations
                 .HasColumnType(ColumnType.String).HasMaxLength(100)
                 .HasComment("Название дисциплины");
 
-            builder.Property(t => t.Hours)
-                .HasColumnName("c_subject_hours")
-                .HasColumnType(ColumnType.Int)
-                .HasComment("Часы");
-
 			builder.Property(p => p.TeacherId)
 	            .HasColumnName("c_subject_teacher_id")
 	            .HasComment("Идентификатор преподавателя");
@@ -48,6 +43,24 @@ namespace PetrovGeorgeKt_43_21.Configurations
 				.HasIndex(p => p.TeacherId, $"idx_{TableName}_fk_f_teacher_id");
 
 			builder.Navigation(p => p.Teacher)
+				.AutoInclude();
+
+
+			builder.Property(p => p.TeachingLoadId)
+				.HasColumnName("c_subject_teachingload_id")
+				.HasComment("Идентификатор нагрузки");
+
+			builder.ToTable(TableName)
+				.HasOne(p => p.TeachingLoad)
+				.WithOne()
+				.HasForeignKey<Subject>(p => p.TeachingLoadId)
+				.HasConstraintName("fk_f_teachingload_id")
+				.OnDelete(DeleteBehavior.Cascade);
+
+			builder.ToTable(TableName)
+				.HasIndex(p => p.TeachingLoadId, $"idx_{TableName}_fk_f_teachingload_id");
+
+			builder.Navigation(p => p.TeachingLoad)
 				.AutoInclude();
 		}
     }
